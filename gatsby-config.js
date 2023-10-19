@@ -22,7 +22,7 @@ module.exports = {
     {
       resolve: 'gatsby-plugin-react-helmet',
       options: {
-        icon: 'favicon.png', // Adjust the path to your favicon
+        icon: 'static/favicon.ico', // Adjust the path to your favicon
       },
     },
   ],
