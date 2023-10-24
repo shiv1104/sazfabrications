@@ -56,7 +56,7 @@ class Blog extends React.Component {
                   <div className="blog-post">
                     <div className="blog-image">
                       <figure>
-                        <GatsbyImage alt="" image={post.node.heroImage.gatsbyImageData} />
+                        <GatsbyImage alt="" image={post.node.heroImage.gatsbyImage} />
                       </figure>
                       <Link to={`/services/${post.node.slug}`} >
                         <FontAwesomeIcon icon={faAnglesRight} />
@@ -101,7 +101,7 @@ export const pageQuery = graphql`
           slug
           title
           heroImage{
-            gatsbyImageData(
+            gatsbyImage(
               layout: FULL_WIDTH
               placeholder: BLURRED
               width: 400

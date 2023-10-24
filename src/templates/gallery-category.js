@@ -44,7 +44,7 @@ const CategoryTemplate = ({ data }) => {
                   <div className="blog-post">
                     <div className="blog-image">
                       <figure>
-                        <GatsbyImage alt="" image={post.node.cardImage.gatsbyImageData} />
+                        <GatsbyImage alt="" image={post.node.cardImage.gatsbyImage} />
                       </figure>
                       <Link to={`${post.node.slug}`} >
                         <FontAwesomeIcon icon={faAnglesRight} />
@@ -102,7 +102,7 @@ export const pageQuery = graphql`
           title
           slug
           cardImage {
-            gatsbyImageData(layout: FULL_WIDTH, placeholder: BLURRED, width: 400, height: 267)
+            gatsbyImage(layout: FULL_WIDTH, placeholder: BLURRED, width: 400, height: 267)
           }
           category {
             slug

@@ -49,7 +49,7 @@ class BlogPostTemplate extends React.Component {
    const { selectedImageIndex, showModal } = this.state;
    const galleryImages = post.gallery.map((image, index) => ({
      original: image.url,
-     thumbnail: image.gatsbyImageData.images.fallback.src,
+     thumbnail: image.gatsbyImage.images.fallback.src,
      description: `Image ${index + 1}`,
    }));
    const seoTitle = post.seoTitle || post.title;
@@ -93,7 +93,7 @@ class BlogPostTemplate extends React.Component {
           <div class="blog-post ">
             <div class="blog-image">
               <figure>
-              <GatsbyImage alt={post.title} image={post.heroImage?.gatsbyImageData} />
+              <GatsbyImage alt={post.title} image={post.heroImage?.gatsbyImage} />
               </figure>
             </div>
             
@@ -122,7 +122,7 @@ class BlogPostTemplate extends React.Component {
                             onClick={() => this.openImageSlider(index)}
                           >
                             <GatsbyImage
-                              image={image.gatsbyImageData}
+                              image={image.gatsbyImage}
                               alt={`Image ${index + 1}`}
                             />
                           </div>
@@ -166,14 +166,14 @@ export const pageQuery = graphql`
       }
       heroImage {
         url
-        gatsbyImageData(layout: FULL_WIDTH, placeholder: BLURRED, width: 1200)
+        gatsbyImage(layout: FULL_WIDTH, placeholder: BLURRED, width: 1200)
         resize(height: 630, width: 1200) {
           src
         }
       }
       gallery {
         url
-        gatsbyImageData(
+          gatsbyImage(
             layout: FULL_WIDTH
             placeholder: BLURRED
             width: 400

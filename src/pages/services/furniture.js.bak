@@ -1,11 +1,14 @@
 import * as React from "react";
 import { graphql, Link } from 'gatsby'
+import get from 'lodash/get'
+import { documentToPlainTextString } from '@contentful/rich-text-plain-text-renderer'
 import { GatsbyImage } from 'gatsby-plugin-image'
 import Layout from '../../components/layout'
 import Hero from '../../components/hero';
 import Seo from '../../components/seo';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faAnglesRight } from '@fortawesome/free-solid-svg-icons'
+import { faArrowRight } from '@fortawesome/free-solid-svg-icons'
 
 
 
@@ -13,16 +16,15 @@ import { faAnglesRight } from '@fortawesome/free-solid-svg-icons'
 class Blog extends React.Component {
   render() {
     const servicesData = this.props.data.allContentfulServices.edges;
-    const pageTitleData = this.props.data.allContentfulPageTitleAndSubtitle.edges;
     const seoDetail = this.props.data.allContentfulSeo.edges;
-    let seoTitle = pageTitleData[0].node.pageTitle;
-    let seoDesc = pageTitleData[0].node.subtitle;
+    let seoTitle = 'Furniture';
+    let seoDesc = '';
     let keywords = '';
     
     if (seoDetail.length > 0) {
-      seoTitle = seoDetail[0].node.title || pageTitleData[0].node.pageTitle;
-      seoDesc = seoDetail[0].node.detail?.detail || pageTitleData[0].node.subtitle;
-      keywords = seoDetail[0].node.keywords || '';
+      seoTitle = seoDetail[0].node.title || 'Furniture';;
+      seoDesc = seoDetail[0].node.detail?.detail || '';
+      keywords = seoDetail[0].node.keywords || '';;
     }
     return (
       <>
@@ -34,8 +36,8 @@ class Blog extends React.Component {
         <Layout>
           <Hero
             image=''
-            title={pageTitleData[0].node.pageTitle}
-            content={pageTitleData[0].node.subtitle}
+            title='Furniture'
+            content=''
           />
 
           {/* Blog Style One Start */}
@@ -116,15 +118,6 @@ export const pageQuery = graphql`
           detail {
             detail
           }
-        }
-      }
-    }
-    allContentfulPageTitleAndSubtitle(filter: {pageName: {eq: "Furniture"}}) {
-      edges {
-        node {
-          id
-          pageTitle
-          subtitle
         }
       }
     }

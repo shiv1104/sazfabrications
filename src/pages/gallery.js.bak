@@ -16,15 +16,13 @@ class Gallery extends React.Component {
   render() {
     const galleryCate = this.props.data.allContentfulGalleryCategory.edges;
     const seoDetail = this.props.data.allContentfulSeo.edges;
-    const pageTitleData = this.props.data.allContentfulPageTitleAndSubtitle.edges;
-
-    let seoTitle = pageTitleData[0].node.pageTitle;
-    let seoDesc = pageTitleData[0].node.subtitle;
+    let seoTitle = 'Gallery';
+    let seoDesc = '';
     let keywords = '';
     
     if (seoDetail.length > 0) {
-      seoTitle = seoDetail[0].node.title || pageTitleData[0].node.pageTitle;
-      seoDesc = seoDetail[0].node.detail?.detail || pageTitleData[0].node.subtitle;
+      seoTitle = seoDetail[0].node.title || 'Gallery';;
+      seoDesc = seoDetail[0].node.detail?.detail || '';
       keywords = seoDetail[0].node.keywords || '';;
     }
 
@@ -39,8 +37,8 @@ class Gallery extends React.Component {
       <Layout>
       <Hero
           image=''
-          title={pageTitleData[0].node.pageTitle}
-          content={pageTitleData[0].node.subtitle}
+          title='Gallery'
+          content='Our values and vaulted us to the top of our industry.'
         />
      
         {/* Shop Style One Start */}
@@ -116,15 +114,6 @@ export const pageQuery = graphql`
           detail {
             detail
           }
-        }
-      }
-    }
-    allContentfulPageTitleAndSubtitle(filter: {pageName: {eq: "Gallery"}}) {
-      edges {
-        node {
-          id
-          pageTitle
-          subtitle
         }
       }
     }

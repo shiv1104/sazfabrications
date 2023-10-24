@@ -1,5 +1,5 @@
 import React from 'react'
-import { Helmet } from 'react-helmet';
+
 import "bootstrap/dist/css/bootstrap.min.css";
 import "../style/magnific-popup.css"
 import "../style/aos.css"
@@ -21,9 +21,6 @@ class Template extends React.Component {
 
     return (
       <>
-        <Helmet>
-        <link rel="icon" href="/favicon.ico" />
-        </Helmet>
         <Header />
         {children}
         <Footer />
