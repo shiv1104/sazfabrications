@@ -8,11 +8,9 @@ import Gallery from "react-image-gallery";
 import Seo from '../components/seo'
 import 'react-image-gallery/styles/css/image-gallery.css';
 
-import aboutOne from "../images/about-image-1.jpg";
-import aboutTwo from "../images/about-image-2.jpg";
 import readytowork from "../images/ready-to-work.png";
 
-import building from "../images/building-2.png";
+
 import heading from "../images/heading-icon.png"
 
 
@@ -55,11 +53,13 @@ class About_Us extends React.Component {
     const aboutCoreValues = this.props.data.allContentfulAboutCoreValues.edges;
     const aboutGallery = this.props.data.allContentfulAboutGallery.edges;
     const aboutusData = this.props.data.allContentfulAboutDetail.edges;
+    const pageTitleData = this.props.data.allContentfulPageTitleAndSubtitle.edges;
+    
     const { selectedImageIndex, showModal } = this.state;
 
     const galleryImages = aboutGallery.map((imagepost, index) => ({
-      original: imagepost.node.image.url,
-      thumbnail: imagepost.node.image.gatsbyImage.images.fallback.src,
+      original: imagepost.node.image?.url,
+      thumbnail: imagepost.node.image?.gatsbyImageData.images.fallback.src,
       description: imagepost.node.name,
     }));
 
@@ -92,8 +92,8 @@ class About_Us extends React.Component {
     <Layout>
       <Hero
           image=''
-          title='About Us'
-          content='Experience top-quality steel fabrication and engineering works in Dubai.'
+          title={pageTitleData[0].node.pageTitle}
+          content={pageTitleData[0].node.subtitle}
         />
 
 
@@ -203,13 +203,13 @@ class About_Us extends React.Component {
             <div className="col-lg-3 col-md-6 col-sm-6">
               <figure>
               <div
-                            href={image.node.image.url}
+                            href={image.node.image?.url}
                             className="popup-image"
                             title={image.node.name}
                             onClick={() => this.openImageSlider(index)}
                           >
                             <GatsbyImage
-                              image={image.node.image.gatsbyImage}
+                              image={image.node.image?.gatsbyImageData}
                               alt={image.node.name}
                             />
                           </div>
@@ -255,9 +255,6 @@ class About_Us extends React.Component {
                 <i className="fa-solid fa-check" />
                 <p>Custom Tailored Solutions</p>
               </li>
-
-
-
               <li>
                 <i className="fa-solid fa-check" />
                 <p>Stringent Quality Standards</p>
@@ -333,7 +330,6 @@ export const aboutPage = graphql`
           title
           seoFor
           keywords
-       
           detail {
             detail
           }
@@ -347,7 +343,7 @@ export const aboutPage = graphql`
           name
           image {
             url
-            gatsbyImage(
+            gatsbyImageData(
               layout: FULL_WIDTH
               placeholder: BLURRED
               width: 400
@@ -363,7 +359,7 @@ export const aboutPage = graphql`
           id
           imageLarge {
             url
-            gatsbyImage(
+            gatsbyImageData(
               layout: FULL_WIDTH
               placeholder: BLURRED
               width: 413
@@ -372,7 +368,7 @@ export const aboutPage = graphql`
           }
           imageSmall {
             url
-            gatsbyImage(
+            gatsbyImageData(
               layout: FULL_WIDTH
               placeholder: BLURRED
               width: 280
@@ -390,6 +386,15 @@ export const aboutPage = graphql`
           detail2 {
             raw
           }
+        }
+      }
+    }
+    allContentfulPageTitleAndSubtitle(filter: {pageName: {eq: "About_Us"}}) {
+      edges {
+        node {
+          id
+          subtitle
+          pageTitle
         }
       }
     }
