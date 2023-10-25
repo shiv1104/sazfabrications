@@ -44,7 +44,7 @@ const CategoryTemplate = ({ data }) => {
                   <div className="blog-post">
                     <div className="blog-image">
                       <figure>
-                        <GatsbyImage alt="" image={post.node.cardImage.gatsbyImage} />
+                        <GatsbyImage alt="" image={post.node.cardImage?.gatsbyImage} />
                       </figure>
                       <Link to={`/gallery/detail/${post.node.slug}`} >
                         <FontAwesomeIcon icon={faAnglesRight} />
