@@ -55,7 +55,7 @@ class Gallery extends React.Component {
                   <div className="blog-post">
                     <div className="blog-image">
                       <figure>
-                        <GatsbyImage alt="" image={post.node.image.gatsbyImageData} />
+                        <GatsbyImage alt="" image={post.node.image?.gatsbyImageData} />
                       </figure>
                       <Link to={`${post.node.slug}`} >
                         <FontAwesomeIcon icon={faAnglesRight} />
