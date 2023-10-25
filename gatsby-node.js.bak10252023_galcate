@@ -155,7 +155,7 @@ exports.createPages = async ({ graphql, actions, reporter }) => {
   if (galleries.length > 0) {
     galleries.forEach(({ node }) => {
       createPage({
-        path: `/gallery/detail/${node.slug}/`,
+        path: `/gallery/${node.category.slug}/${node.slug}/`,
         component: galleryDetailTemplate,
         context: {
           slug: node.slug,
