@@ -61,7 +61,7 @@ class Footer extends React.Component {
           // Form is valid, you can submit it here or perform any desired action
           this.setState({ buttonText: 'Processing' });
           try {
-            const response = await fetch('https://formspree.io/f/xyyqblnb', { // Ensure the URL matches your PHP script's location
+            const response = await fetch('https://formspree.io/f/xknlyjze', { // Ensure the URL matches your PHP script's location
               method: 'POST',
               headers: {
                 'Content-Type': 'application/json',

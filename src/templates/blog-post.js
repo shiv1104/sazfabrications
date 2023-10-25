@@ -69,7 +69,7 @@ class BlogPostTemplate extends React.Component {
           <div class="blog-post ">
             <div class="blog-image">
               <figure>
-              <GatsbyImage alt={post.title} image={post.heroImage?.gatsbyImageData} />
+              <GatsbyImage alt={post.title} image={post.heroImage?.gatsbyImage} />
               </figure>
             </div>
             <div class="blog-data">
@@ -142,7 +142,7 @@ export const pageQuery = graphql`
       rawDate: publishDate
       heroImage {
         url
-        gatsbyImageData(layout: FULL_WIDTH, placeholder: BLURRED, width: 1280)
+        gatsbyImage(layout: FULL_WIDTH, placeholder: BLURRED, width: 1280)
         resize(height: 630, width: 1200) {
           src
         }

@@ -133,7 +133,7 @@ const Header = () => {
                 <li className="menu-item-has-children"><a href="/services/">Services</a>
                   <ul className="sub-menu">
                     <li className="menu-item-has-children">
-                      <a href="javascript:void(0)">Fabrication Works </a>
+                      <a href="javascript:void(0)">Fabrication Works</a>
                       <ul className="sub-menu">
                         <li><a href="/services/fabrication/steel-fabrication">Steel fabrication</a></li>
                         <li><a href="/services/fabrication/aluminum-fabrication">Aluminum Fabrication</a></li>
