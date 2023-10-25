@@ -43,7 +43,7 @@ class GalleryPostTemplate extends Component {
   render() {
     const post = get(this.props, 'data.contentfulGallery');
     const { selectedImageIndex, showModal } = this.state;
-    const galleryImages = post.images.map((image, index) => ({
+    const galleryImages = post.images?.map((image, index) => ({
       original: image.url,
       thumbnail: image.gatsbyImage.images.fallback.src,
       description: `Image ${index + 1}`,
