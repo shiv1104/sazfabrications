@@ -52,7 +52,7 @@ const CategoryTemplate = ({ data }) => {
                     </div>
                     <div className="blog-data">
                       <h3>
-                        <Link to={`${post.node.slug}`} >
+                        <Link to={/gallery/detail/`${post.node.slug}`} >
                           {post.node.title}
                         </Link>
                       </h3>
