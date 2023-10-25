@@ -14,7 +14,9 @@ import { faAnglesLeft } from '@fortawesome/free-solid-svg-icons'
 import pImage1 from "../images/project-img-1.jpg"
 import headingIcon from "../images/heading-icon.png"
 import certificates from "../images/certificates.jpg";
-import placeholder_image_url from "../images/placeholder-600-400.jpg"
+import AboutOne from "../images/about-image-1.jpg"
+import AboutTwo from "../images/about-image-2.jpg"
+
 import Layout from '../components/layout';
 
 class IndexPage extends React.Component {
@@ -312,10 +314,7 @@ class IndexPage extends React.Component {
 
                         <div className="project-slider-box" key={post.node.id}>
                           <div className="project-post">
-                            <figure>
-                              <img className="projectImage"
-                              src={post.node.image ? post.node.image.url : placeholder_image_url}
-                               alt={post.node.title} /></figure>
+                            <figure><img src={post.node.image.url} alt={post.node.title} /></figure>
                             <div className="project-data">
 
                               <h3>{post.node.title}</h3>
@@ -351,13 +350,14 @@ class IndexPage extends React.Component {
                 <div className="client-slider owl-carousel overflow-hidden">
                   <Slider {...clientSettings}>
                     {clientsData.map((client) => {
-                      return client.node.logo ? (
+                      return (
                         <img
                           className="w-auto m-auto"
                           src={client.node.logo.url}
                           alt="client-3"
                         />
-                      ) : null;
+
+                      );
                     })}
 
 

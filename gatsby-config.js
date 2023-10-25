@@ -18,12 +18,6 @@ module.exports = {
         spaceId: process.env.CONTENTFUL_SPACE_ID,
         accessToken: process.env.CONTENTFUL_ACCESS_TOKEN,
       },
-    },
-    {
-      resolve: 'gatsby-plugin-react-helmet',
-      options: {
-        icon: 'static/favicon.ico', // Adjust the path to your favicon
-      },
-    },
+    }
   ],
 }

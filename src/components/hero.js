@@ -1,4 +1,6 @@
 import React from 'react'
+import { GatsbyImage } from 'gatsby-plugin-image'
+import { renderRichText } from 'gatsby-source-contentful/rich-text'
 import pattren from "../images/pattren-3.png";
 
 const Hero = ({ image, title, content }) => {

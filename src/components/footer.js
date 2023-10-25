@@ -61,7 +61,7 @@ class Footer extends React.Component {
           // Form is valid, you can submit it here or perform any desired action
           this.setState({ buttonText: 'Processing' });
           try {
-            const response = await fetch('https://formspree.io/f/xknlyjze', { // Ensure the URL matches your PHP script's location
+            const response = await fetch('https://formspree.io/f/xyyqblnb', { // Ensure the URL matches your PHP script's location
               method: 'POST',
               headers: {
                 'Content-Type': 'application/json',
@@ -72,35 +72,19 @@ class Footer extends React.Component {
             if (response.ok) {
               // Successful response
               console.log('Form data sent successfully');
-              this.setState({
-                message: 'Form data sent successfully',
-                messageType: 'success',
-              });
               // You can handle the success response here
             } else {
               // Server returned an error
               console.error('Form data could not be sent');
-              this.setState({
-                message: 'Form data could not be sent',
-                messageType: 'fail',
-              });
               // You can handle the error response here
             }
           } catch (error) {
             console.error('An error occurred while sending form data:', error);
-            this.setState({
-                message: 'An error occurred while sending form data',
-                messageType: 'fail',
-              });
             // Handle any other errors here
-          } finally {
-            // Reset the button text to "Submit" after processing is complete
-            this.setState({ buttonText: 'Submit' });
           }
         } else {
           // Update the state with validation errors
           this.setState({ errors: validationErrors });
-          this.setState({ buttonText: 'Submit' });
         }
       };
 
@@ -201,7 +185,7 @@ class Footer extends React.Component {
                                                 />{" "}
                                             </g>{" "}
                                         </svg>
-                                        <p>+971 54 410 1606</p>
+                                        <p>+971 54 101 606</p>
                                     </li>
                                     <li>
                                         <img src={phone} width={20} height={20} alt="Phone" />
@@ -344,15 +328,8 @@ class Footer extends React.Component {
                                         </div>
                                         <div className="col-lg-12 mt-15">
                                             <button className="theme-btn">
-                                            {this.state.buttonText} <i><FontAwesomeIcon icon={faArrowRight} /></i>
+                                                Submit <i><FontAwesomeIcon icon={faArrowRight} /></i>
                                             </button>
-                                        </div>
-                                        <div className="col-lg-12 mt-15">
-                                        {this.state.message ? (
-                                            <p><span className={this.state.messageType}>{this.state.message}</span></p>
-                                        ) : (
-                                        ''
-                                        )}
                                         </div>
                                     </div>
                                 </form>

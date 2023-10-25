@@ -55,13 +55,11 @@ class About_Us extends React.Component {
     const aboutCoreValues = this.props.data.allContentfulAboutCoreValues.edges;
     const aboutGallery = this.props.data.allContentfulAboutGallery.edges;
     const aboutusData = this.props.data.allContentfulAboutDetail.edges;
-    const pageTitleData = this.props.data.allContentfulPageTitleAndSubtitle.edges;
-    
     const { selectedImageIndex, showModal } = this.state;
 
     const galleryImages = aboutGallery.map((imagepost, index) => ({
-      original: imagepost.node.image?.url,
-      thumbnail: imagepost.node.image?.gatsbyImage.images.fallback.src,
+      original: imagepost.node.image.url,
+      thumbnail: imagepost.node.image.gatsbyImage.images.fallback.src,
       description: imagepost.node.name,
     }));
 
@@ -94,8 +92,8 @@ class About_Us extends React.Component {
     <Layout>
       <Hero
           image=''
-          title={pageTitleData[0].node.pageTitle}
-          content={pageTitleData[0].node.subtitle}
+          title='About Us'
+          content='Experience top-quality steel fabrication and engineering works in Dubai.'
         />
 
 
@@ -205,13 +203,13 @@ class About_Us extends React.Component {
             <div className="col-lg-3 col-md-6 col-sm-6">
               <figure>
               <div
-                            href={image.node.image?.url}
+                            href={image.node.image.url}
                             className="popup-image"
                             title={image.node.name}
                             onClick={() => this.openImageSlider(index)}
                           >
                             <GatsbyImage
-                              image={image.node.image?.gatsbyImage}
+                              image={image.node.image.gatsbyImage}
                               alt={image.node.name}
                             />
                           </div>
@@ -392,15 +390,6 @@ export const aboutPage = graphql`
           detail2 {
             raw
           }
-        }
-      }
-    }
-    allContentfulPageTitleAndSubtitle(filter: {pageName: {eq: "About_Us"}}) {
-      edges {
-        node {
-          id
-          subtitle
-          pageTitle
         }
       }
     }
