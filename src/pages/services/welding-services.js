@@ -16,14 +16,15 @@ import { faArrowRight } from '@fortawesome/free-solid-svg-icons'
 class Blog extends React.Component {
   render() {
     const servicesData = this.props.data.allContentfulServices.edges;
+    const pageTitleData = this.props.data.allContentfulPageTitleAndSubtitle.edges;
     const seoDetail = this.props.data.allContentfulSeo.edges;
-    let seoTitle = 'Welding Services';
-    let seoDesc = '';
+    let seoTitle = pageTitleData[0].node.pageTitle;
+    let seoDesc = pageTitleData[0].node.subtitle;
     let keywords = '';
     
     if (seoDetail.length > 0) {
-      seoTitle = seoDetail[0].node.title || 'Welding Services';;
-      seoDesc = seoDetail[0].node.detail?.detail || '';
+      seoTitle = seoDetail[0].node.title || pageTitleData[0].node.pageTitle;;
+      seoDesc = seoDetail[0].node.detail?.detail || pageTitleData[0].node.subtitle;
       keywords = seoDetail[0].node.keywords || '';
     }
 
@@ -38,8 +39,8 @@ class Blog extends React.Component {
         <Layout>
           <Hero
             image=''
-            title='Welding Services'
-            content=''
+            title={pageTitleData[0].node.pageTitle}
+            content={pageTitleData[0].node.subtitle}
           />
 
           {/* Blog Style One Start */}
@@ -55,7 +56,7 @@ class Blog extends React.Component {
                   <div className="blog-post">
                     <div className="blog-image">
                       <figure>
-                        <GatsbyImage alt="" image={post.node.heroImage.gatsbyImage} />
+                        <GatsbyImage alt="" image={post.node.heroImage.gatsbyImageData} />
                       </figure>
                       <Link to={`/services/${post.node.slug}`} >
                         <FontAwesomeIcon icon={faAnglesRight} />
@@ -100,7 +101,7 @@ export const pageQuery = graphql`
           slug
           title
           heroImage{
-            gatsbyImage(
+            gatsbyImageData(
               layout: FULL_WIDTH
               placeholder: BLURRED
               width: 400
@@ -120,6 +121,15 @@ export const pageQuery = graphql`
           detail {
             detail
           }
+        }
+      }
+    }
+    allContentfulPageTitleAndSubtitle(filter: {pageName: {eq: "Welding_Services"}}) {
+      edges {
+        node {
+          id
+          pageTitle
+          subtitle
         }
       }
     }

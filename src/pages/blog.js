@@ -11,7 +11,7 @@ import Hero from '../components/hero';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faAnglesRight } from '@fortawesome/free-solid-svg-icons'
-import { faArrowRight } from '@fortawesome/free-solid-svg-icons'
+import placeholder_image_url from "../images/placeholder-600-400.jpg";
 
 const truncateText = (text, maxWords) => {
   // Split the text into words
@@ -32,13 +32,15 @@ class Blog extends React.Component {
   render() {
     const posts = get(this, 'props.data.allContentfulBlogPost.nodes');
     const seoDetail = this.props.data.allContentfulSeo.edges;
-    let seoTitle = 'Blog';
-    let seoDesc = '';
+    const pageTitleData = this.props.data.allContentfulPageTitleAndSubtitle.edges;
+
+    let seoTitle = pageTitleData[0].node.pageTitle;
+    let seoDesc = pageTitleData[0].node.subtitle;
     let keywords = '';
     
     if (seoDetail.length > 0) {
-      seoTitle = seoDetail[0].node.title || 'Blog';;
-      seoDesc = seoDetail[0].node.detail?.detail || '';
+      seoTitle = seoDetail[0].node.title || pageTitleData[0].node.pageTitle;;
+      seoDesc = seoDetail[0].node.detail?.detail || pageTitleData[0].node.subtitle;
       keywords = seoDetail[0].node.keywords || '';
     }
 
@@ -52,8 +54,8 @@ class Blog extends React.Component {
         <Layout>
           <Hero
             image=''
-            title='Our Blog'
-            content='Our values and vaulted us to the top of our industry.'
+            title={pageTitleData[0].node.pageTitle}
+          content={pageTitleData[0].node.subtitle}
           />
 
           {/* Blog Style One Start */}
@@ -68,7 +70,9 @@ class Blog extends React.Component {
                       <div className="blog-post">
                         <div className="blog-image">
                           <figure>
-                            <GatsbyImage alt="" image={post.heroImage.gatsbyImage} />
+                            <GatsbyImage alt=""
+                             image={ post.heroImage?.gatsbyImageData }
+                             />
                           </figure>
                           <Link to={`/blog/${post.slug}`} >
                             <FontAwesomeIcon icon={faAnglesRight} />
@@ -116,7 +120,7 @@ export const pageQuery = graphql`
           name
         }
         heroImage {
-          gatsbyImage(
+          gatsbyImageData(
             layout: FULL_WIDTH
             placeholder: BLURRED
             width: 424
@@ -138,6 +142,15 @@ export const pageQuery = graphql`
           detail {
             detail
           }
+        }
+      }
+    }
+    allContentfulPageTitleAndSubtitle(filter: {pageName: {eq: "Blog"}}) {
+      edges {
+        node {
+          id
+          pageTitle
+          subtitle
         }
       }
     }

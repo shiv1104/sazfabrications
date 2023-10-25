@@ -32,15 +32,15 @@ class Services extends React.Component {
     const { activeTab } = this.state;
     const servicesData = this.props.data.allContentfulServicePageTab.edges;
     const exclusiveServicesData = this.props.data.allContentfulExclusiveServices.edges;
-
+    const pageTitleData = this.props.data.allContentfulPageTitleAndSubtitle.edges;
     const seoDetail = this.props.data.allContentfulSeo.edges;
-    let seoTitle = 'Servies';
-    let seoDesc = '';
+    let seoTitle = pageTitleData[0].node.pageTitle;
+    let seoDesc = pageTitleData[0].node.subtitle;
     let keywords = '';
     
     if (seoDetail.length > 0) {
-      seoTitle = seoDetail[0].node.title || 'Servies';;
-      seoDesc = seoDetail[0].node.detail?.detail || '';
+      seoTitle = seoDetail[0].node.title || pageTitleData[0].node.pageTitle;;
+      seoDesc = seoDetail[0].node.detail?.detail || pageTitleData[0].node.subtitle;
       keywords = seoDetail[0].node.keywords || '';
     }
 
@@ -68,8 +68,8 @@ class Services extends React.Component {
         <Layout>
           <Hero
             image=''
-            title='Our Services'
-            content='our values and vaulted us to the top of our industry.'
+            title={pageTitleData[0].node.pageTitle}
+            content={pageTitleData[0].node.subtitle}
           />
 
 
@@ -108,7 +108,7 @@ class Services extends React.Component {
     >
       <figure>
       <GatsbyImage
-              image={services.node.image.gatsbyImage}
+              image={services.node.image?.gatsbyImageData}
               alt={`Services Nav Image ${index + 1}`}
               className="w-100"
             />
@@ -214,7 +214,7 @@ export const servicesQuery = graphql`
           }
           pageLink
           image {
-            gatsbyImage(
+            gatsbyImageData(
               layout: FULL_WIDTH
               placeholder: BLURRED
               width: 800
@@ -251,6 +251,15 @@ export const servicesQuery = graphql`
           detail {
             detail
           }
+        }
+      }
+    }
+    allContentfulPageTitleAndSubtitle(filter: {pageName: {eq: "Services"}}) {
+      edges {
+        node {
+          id
+          pageTitle
+          subtitle
         }
       }
     }

@@ -21,6 +21,9 @@ class Contact_Us extends React.Component {
         message: '',
       },
       errors: {},
+      cbuttonText: 'Send Message',
+      cmessage: null,
+      cmessageType: null,
     };
   }
 
@@ -38,7 +41,8 @@ class Contact_Us extends React.Component {
     e.preventDefault();
     const { formData } = this.state;
     const validationErrors = {};
-
+    this.setState({ errors: '' });
+    
     // Validate all required fields
     if (!formData.name.trim()) {
       validationErrors.name = 'Name is required';
@@ -56,7 +60,7 @@ class Contact_Us extends React.Component {
 
     if (Object.keys(validationErrors).length === 0) {
       // Form is valid, you can submit it here or perform any desired action
-      // 
+      this.setState({ cbuttonText: 'Processing' });
       try {
         const response = await fetch('https://formspree.io/f/xyyqblnb', { // Ensure the URL matches your PHP script's location
           method: 'POST',
@@ -69,19 +73,35 @@ class Contact_Us extends React.Component {
         if (response.ok) {
           // Successful response
           console.log('Form data sent successfully');
+          this.setState({
+            cmessage: 'Form data sent successfully',
+            cmessageType: 'success',
+          });
           // You can handle the success response here
         } else {
           // Server returned an error
           console.error('Form data could not be sent');
+          this.setState({
+            cmessage: 'Form data could not be sent',
+            cmessageType: 'fail',
+          });
           // You can handle the error response here
         }
       } catch (error) {
         console.error('An error occurred while sending form data:', error);
+        this.setState({
+          cmessage: 'An error occurred while sending form data',
+          cmessageType: 'fail',
+        });
         // Handle any other errors here
+      } finally {
+        // Reset the button text to "Submit" after processing is complete
+        this.setState({ cbuttonText: 'Send Message' });
       }
     } else {
       // Update the state with validation errors
       this.setState({ errors: validationErrors });
+      this.setState({ cbuttonText: 'Send Message' });
     }
   };
 
@@ -89,13 +109,15 @@ class Contact_Us extends React.Component {
 
     const { formData, errors } = this.state;
     const seoDetail = this.props.data.allContentfulSeo.edges;
-    let seoTitle = 'Contact Us';
-    let seoDesc = '';
+    const pageTitleData = this.props.data.allContentfulPageTitleAndSubtitle.edges;
+
+    let seoTitle = pageTitleData[0].node.pageTitle;
+    let seoDesc = pageTitleData[0].node.subtitle;
     let keywords = '';
     
     if (seoDetail.length > 0) {
-      seoTitle = seoDetail[0].node.title || 'Contact Us';;
-      seoDesc = seoDetail[0].node.detail?.detail || '';
+      seoTitle = seoDetail[0].node.title || pageTitleData[0].node.pageTitle;;
+      seoDesc = seoDetail[0].node.detail?.detail || pageTitleData[0].node.subtitle;
       keywords = seoDetail[0].node.keywords || '';;
     }
 
@@ -110,8 +132,8 @@ class Contact_Us extends React.Component {
       <Layout>
       <Hero
           image=''
-          title='Contact Us'
-          content='Our values and vaulted us to the top of our industry.'
+          title={pageTitleData[0].node.pageTitle}
+          content={pageTitleData[0].node.subtitle}
         />
       {/* Contact Form 2 Start */}
       <section className="gap contact-form-2">
@@ -181,8 +203,15 @@ class Contact_Us extends React.Component {
           </div>
         </div>
         <button type="submit" className="theme-btn">
-          Send Message <i><FontAwesomeIcon icon={faAnglesRight} /></i>
+          {this.state.cbuttonText} <i><FontAwesomeIcon icon={faAnglesRight} /></i>
         </button>
+        <div className="row"><div className="col-lg-12 mt-15">
+                                        {this.state.cmessage ? (
+                                            <p><span className={this.state.cmessageType}>{this.state.cmessage}</span></p>
+                                        ) : (
+                                        ''
+                                        )}
+                                        </div></div>
       </form>
               </div>
             </div>
@@ -264,7 +293,7 @@ class Contact_Us extends React.Component {
                     </svg>
                     <div>
                       <h3>Contact No:</h3>
-                      <p>Mob: +971 54 101 606</p>
+                      <p>Mob: +971 54 410 1606</p>
                       <p>Tel: +971 48 927 908</p>
                     </div>
                   </li>
@@ -358,6 +387,15 @@ export const contectQuery = graphql`
           detail {
             detail
           }
+        }
+      }
+    }
+    allContentfulPageTitleAndSubtitle(filter: {pageName: {eq: "Contact"}}) {
+      edges {
+        node {
+          id
+          pageTitle
+          subtitle
         }
       }
     }

@@ -16,13 +16,15 @@ class Gallery extends React.Component {
   render() {
     const galleryCate = this.props.data.allContentfulGalleryCategory.edges;
     const seoDetail = this.props.data.allContentfulSeo.edges;
-    let seoTitle = 'Gallery';
-    let seoDesc = '';
+    const pageTitleData = this.props.data.allContentfulPageTitleAndSubtitle.edges;
+
+    let seoTitle = pageTitleData[0].node.pageTitle;
+    let seoDesc = pageTitleData[0].node.subtitle;
     let keywords = '';
     
     if (seoDetail.length > 0) {
-      seoTitle = seoDetail[0].node.title || 'Gallery';;
-      seoDesc = seoDetail[0].node.detail?.detail || '';
+      seoTitle = seoDetail[0].node.title || pageTitleData[0].node.pageTitle;
+      seoDesc = seoDetail[0].node.detail?.detail || pageTitleData[0].node.subtitle;
       keywords = seoDetail[0].node.keywords || '';;
     }
 
@@ -37,8 +39,8 @@ class Gallery extends React.Component {
       <Layout>
       <Hero
           image=''
-          title='Gallery'
-          content='Our values and vaulted us to the top of our industry.'
+          title={pageTitleData[0].node.pageTitle}
+          content={pageTitleData[0].node.subtitle}
         />
      
         {/* Shop Style One Start */}
@@ -53,7 +55,7 @@ class Gallery extends React.Component {
                   <div className="blog-post">
                     <div className="blog-image">
                       <figure>
-                        <GatsbyImage alt="" image={post.node.image.gatsbyImage} />
+                        <GatsbyImage alt="" image={post.node.image.gatsbyImageData} />
                       </figure>
                       <Link to={`${post.node.slug}`} >
                         <FontAwesomeIcon icon={faAnglesRight} />
@@ -99,7 +101,7 @@ export const pageQuery = graphql`
           name
           slug
           image {
-            gatsbyImage(layout: FULL_WIDTH, placeholder: BLURRED, width: 400, height: 267)
+            gatsbyImageData(layout: FULL_WIDTH, placeholder: BLURRED, width: 400, height: 267)
           }
         }
       }
@@ -114,6 +116,15 @@ export const pageQuery = graphql`
           detail {
             detail
           }
+        }
+      }
+    }
+    allContentfulPageTitleAndSubtitle(filter: {pageName: {eq: "Gallery"}}) {
+      edges {
+        node {
+          id
+          pageTitle
+          subtitle
         }
       }
     }

@@ -330,6 +330,7 @@ export const aboutPage = graphql`
           title
           seoFor
           keywords
+       
           detail {
             detail
           }

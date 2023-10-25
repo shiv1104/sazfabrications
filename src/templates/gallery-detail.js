@@ -45,7 +45,7 @@ class GalleryPostTemplate extends Component {
     const { selectedImageIndex, showModal } = this.state;
     const galleryImages = post.images.map((image, index) => ({
       original: image.url,
-      thumbnail: image.gatsbyImage.images.fallback.src,
+      thumbnail: image.gatsbyImageData.images.fallback.src,
       description: `Image ${index + 1}`,
     }));
 
@@ -79,7 +79,7 @@ class GalleryPostTemplate extends Component {
                             onClick={() => this.openImageSlider(index)}
                           >
                             <GatsbyImage
-                              image={image.gatsbyImage}
+                              image={image.gatsbyImageData}
                               alt={`Image ${index + 1}`}
                             />
                           </div>
@@ -130,7 +130,7 @@ export const pageQuery = graphql`
       slug
       images {
         url
-        gatsbyImage(
+        gatsbyImageData(
           layout: FULL_WIDTH
           placeholder: BLURRED
           width: 400

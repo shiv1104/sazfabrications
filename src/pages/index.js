@@ -1,7 +1,5 @@
 import * as React from "react"
 import { Link, graphql } from 'gatsby'
-import get from 'lodash/get'
-import { documentToPlainTextString } from '@contentful/rich-text-plain-text-renderer'
 import { BLOCKS } from '@contentful/rich-text-types'
 import { GatsbyImage, getImage } from 'gatsby-plugin-image'
 import Slider from "react-slick";
@@ -11,12 +9,9 @@ import { renderRichText } from 'gatsby-source-contentful/rich-text'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faAnglesRight } from '@fortawesome/free-solid-svg-icons'
 import { faAnglesLeft } from '@fortawesome/free-solid-svg-icons'
-import pImage1 from "../images/project-img-1.jpg"
 import headingIcon from "../images/heading-icon.png"
 import certificates from "../images/certificates.jpg";
-import AboutOne from "../images/about-image-1.jpg"
-import AboutTwo from "../images/about-image-2.jpg"
-
+import placeholder_image_url from "../images/placeholder-600-400.jpg"
 import Layout from '../components/layout';
 
 class IndexPage extends React.Component {
@@ -314,7 +309,10 @@ class IndexPage extends React.Component {
 
                         <div className="project-slider-box" key={post.node.id}>
                           <div className="project-post">
-                            <figure><img src={post.node.image.url} alt={post.node.title} /></figure>
+                            <figure>
+                              <img className="projectImage"
+                              src={post.node.image ? post.node.image.url : placeholder_image_url}
+                               alt={post.node.title} /></figure>
                             <div className="project-data">
 
                               <h3>{post.node.title}</h3>
@@ -350,14 +348,13 @@ class IndexPage extends React.Component {
                 <div className="client-slider owl-carousel overflow-hidden">
                   <Slider {...clientSettings}>
                     {clientsData.map((client) => {
-                      return (
+                      return client.node.logo ? (
                         <img
                           className="w-auto m-auto"
                           src={client.node.logo.url}
                           alt="client-3"
                         />
-
-                      );
+                      ) : null;
                     })}
 
 
@@ -563,7 +560,7 @@ export const homePageSlider = graphql`
           id
           imageLarge {
             url
-            gatsbyImage(
+            gatsbyImageData(
               layout: FULL_WIDTH
               placeholder: BLURRED
               width: 413
@@ -572,7 +569,7 @@ export const homePageSlider = graphql`
           }
           imageSmall {
             url
-            gatsbyImage(
+            gatsbyImageData(
               layout: FULL_WIDTH
               placeholder: BLURRED
               width: 280
