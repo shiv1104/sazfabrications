@@ -66,7 +66,7 @@ class GalleryPostTemplate extends Component {
         <section className="gap shop-style-one addition">
           <div className="container">
             <div className="row p-slider align-items-center justify-content-center grid">
-              {post.images.map((image, index) => (
+              {post.images?.map((image, index) => (
                 <div className="col-lg-4 mb-30" key={index}>
                   <div className="product p-0">
                     <div className="main-data">
