@@ -47,7 +47,7 @@ class BlogPostTemplate extends React.Component {
     const post = get(this.props, 'data.contentfulServices')
    // const plainTextDescription = post.sortDetail.sortDetail;
    const { selectedImageIndex, showModal } = this.state;
-   const galleryImages = post.gallery.map((image, index) => ({
+   const galleryImages = post.gallery?.map((image, index) => ({
      original: image.url,
      thumbnail: image.gatsbyImage.images.fallback.src,
      description: `Image ${index + 1}`,
