@@ -56,7 +56,7 @@ class Blog extends React.Component {
                   <div className="blog-post">
                     <div className="blog-image">
                       <figure>
-                        <GatsbyImage alt="" image={post.node.heroImage.gatsbyImageData} />
+                        <GatsbyImage alt="" image={post.node.heroImage?.gatsbyImageData} />
                       </figure>
                       <Link to={`/services/${post.node.slug}`} >
                         <FontAwesomeIcon icon={faAnglesRight} />
