@@ -112,7 +112,7 @@ class BlogPostTemplate extends React.Component {
         <div className="container g-0">
           <div className="row g-0">
 
-          {post.gallery.map((image, index) => (
+          {post.gallery?.map((image, index) => (
             <div className="col-lg-4 col-md-6 col-sm-6">
               <figure>
               <div
